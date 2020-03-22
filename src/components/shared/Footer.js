@@ -1,8 +1,8 @@
 import React from 'react'
-import { useStateValue } from "./../../store";
+import { Button } from 'antd';
+import { DoubleRightOutlined, DoubleLeftOutlined } from '@ant-design/icons';
 
-export const Footer = ({ page, setPage }) => {
-    const [state,dispatch] = useStateValue();
+export const Footer = ({ page, setPage, total, dispatch }) => {
   
     const handleNext = page => {
       dispatch({ type: "LOADING", payload: true });
@@ -16,10 +16,8 @@ export const Footer = ({ page, setPage }) => {
 
     return (
         <div>
-             <button disabled={page === 0 } onClick={() => handlePreview(page)}>
-        Anterior
-      </button>
-      <button onClick={() => handleNext(page)}>Próxima</button> 
+          <Button type="primary" icon={<DoubleLeftOutlined />}   disabled={page === 0 } onClick={() => handlePreview(page)}>Anterior</Button> 
+          <Button type="primary" icon={<DoubleRightOutlined />} disabled={total <= 10 } onClick={() => handleNext(page)}>Próxima</Button> 
         </div>
     )
 }

@@ -40,8 +40,8 @@ const App = () => {
   return (
     <div>
       <Navbar search={handleSearch} />
-      {state.loading ? <Loader type={"bars"} /> : <Dashboard  total={total} />}
-      <Footer setPage={setPage} page={page} />
+        {state.loading ? <Loader type={"bars"} /> : <Dashboard  total={total} />}
+        <Footer setPage={setPage} page={page} dispatch={dispatch} total={total}/>
     </div>
   );
 };

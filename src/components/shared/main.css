@@ -40,3 +40,22 @@
     right: -45px;
   }
   
+  /**/
+
+  .book-container {
+    margin: 3% auto;
+    left: 10%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .book-detail{
+    align-content: space-between;
+  }
+  
+  .book-img {
+    width: 16%;
+    height: auto;
+    float: left;
+  }
+  

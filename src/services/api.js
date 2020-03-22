@@ -1,14 +1,18 @@
 /* FROM EXTERNAL GOOGLE API */
 const API_URL = "https://www.googleapis.com/books/v1";
-const API_KEY = 'KEY_GOOGLE';
 const MAX= 10;
 
 export const getBooks = async (startIndex,filter) => {
   const searchTerm = encodeURIComponent(filter);
-  //author:
-  //isbn:
-  //
-  let response = await fetch(`${API_URL}/volumes?q=${searchTerm}&maxResults=${MAX}&startIndex=${startIndex}&key${API_KEY}`);
+  let response = await fetch(`${API_URL}/volumes?q=${searchTerm}&maxResults=${MAX}&startIndex=${startIndex}`);
+  let data = await response.json();
+  return data;
+};
+
+
+export const getBook = async (key) => {
+  const id = encodeURIComponent(key);
+  let response = await fetch(`${API_URL}/volumes/${id}`);
   let data = await response.json();
   return data;
 };

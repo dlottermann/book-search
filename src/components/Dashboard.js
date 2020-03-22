@@ -9,8 +9,11 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
+import {Link} from "react-router-dom";
 
-const useStyles = makeStyles({
+import { normalizeDate, normalizeISBN } from '../utils'
+
+const useStyles = makeStyles(theme => ({
   table: {
     minWidth: 650,
     maxWidth: "95%",
@@ -21,40 +24,38 @@ const useStyles = makeStyles({
   },
   container: {
     paddingBottom: 9
+  },
+  modal: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center"
+  },
+  paper: {
+    backgroundColor: theme.palette.background.paper,
+    boxShadow: theme.shadows[3],
+    padding: theme.spacing(2, 4, 3)
+  },
+  MuiBackdrop: {
+    backgroundColor: "#red"
   }
-});
+}));
 
-const normalizeISBN = isbn => {
-  if (isbn) {
-    if (!Array.isArray(isbn)) return null;
-    let num = isbn.filter(i => i.type === "ISBN_13");
-    return num.length > 0 ? `(${num[0].identifier})` : "-";
-  }
-};
 
-const normalizeDate = date => {
-  if (date) {
-    if (date.includes("-")) {
-      const year = date.split("-");
-      return year[0];
-    } else {
-      return date;
-    }
-  }
-};
 
-const Dashboard = () => {
+
+const Dashboard = ({ total }) => {
   const [state] = useStateValue();
-
   const classes = useStyles();
+
   return (
     <div className={classes.container}>
       <TableContainer component={Paper}>
         <Table
           className={classes.table}
           size="small"
-          aria-label="a dense table"
+          aria-label="a dense caption table"
         >
+          <caption>Total de registros {total}</caption>
           <TableHead>
             <TableRow>
               <TableCell>Livro</TableCell>
@@ -66,7 +67,7 @@ const Dashboard = () => {
           </TableHead>
           <TableBody>
             {state.books.length > 0 ? (
-              state.books.map((book, index) => (
+              state.books.map((book,index) => (
                 <TableRow key={index}>
                   <TableCell component="th" scope="row">
                     {book.title} - {book.subtitle}
@@ -78,7 +79,13 @@ const Dashboard = () => {
                   <TableCell align="right">
                     {normalizeDate(book.publishedDate)}
                   </TableCell>
-                  <TableCell align="right">Detalhes</TableCell>
+                  <TableCell align="right">
+                    <Link to={`detail/${book.id}`} >
+                      Detalhes
+                    </Link>
+                    {/* Modal book */}
+                   
+                  </TableCell>
                 </TableRow>
               ))
             ) : (
